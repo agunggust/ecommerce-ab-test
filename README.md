@@ -52,6 +52,13 @@ Konversi tetap menjadi metrik utama. CSV Udacity hanya memuat hasil konversi bin
 
 **Aturan rilis.** Sebelum tes dimulai, sepakati penurunan pendapatan per pengguna dan kenaikan tingkat refund maksimum yang bisa diterima. Setelah jendela pengukuran lengkap, hitung interval kepercayaan 95% untuk selisih treatment dikurangi control dengan bootstrap pada tingkat pengguna di masing-masing grup. Bawa semua pesanan pengguna yang sama dalam setiap pengambilan sampel. Pertimbangkan rilis jika alokasi valid, konversi memenuhi kriteria utama, batas bawah interval selisih pendapatan berada di atas batas penurunan, dan batas atas interval selisih tingkat refund berada di bawah batas kenaikan. Jika hasil metrik pengaman belum meyakinkan, tunda rilis penuh.
 
+## Rencana eksperimen ulang
+
+1. **Penugasan.** Acak pengguna yang memenuhi syarat 50/50 saat pertama kali memenuhi kriteria tes, lalu pertahankan grupnya pada kunjungan berikutnya. Hitung konversi sebagai proporsi semua pengguna yang ditugaskan yang memiliki minimal satu pesanan berbayar dalam 7 hari. Catat versi halaman yang dilihat untuk mengaudit kecocokan paparan dengan penugasan.
+2. **Ukuran sampel konversi.** Gunakan baseline historis **10,53%** sebagai asumsi awal. Jika efek sebenarnya **+1,00 poin persentase**, estimasi awalnya **61.582 pengguna per grup** atau **123.164 total**. Dengan pendekatan normal, jumlah ini memberi sekitar **80% peluang** agar batas bawah interval 95% melampaui ambang rilis **+0,50 poin persentase**. Notebook juga menghitung kebutuhan sampel untuk skenario efek lain.
+3. **Ukuran sampel akhir.** Sepakati toleransi penurunan pendapatan dan kenaikan refund dengan tim produk dan keuangan. Gunakan riwayat pesanan dan refund pada tingkat pengguna untuk memperkirakan peluang ketiga syarat rilis terpenuhi bersamaan. Sesuaikan target sampel dan kunci aturan keputusan sebelum tes dimulai.
+4. **Waktu keputusan.** Evaluasi setelah target sampel tercapai dan semua jendela pengukuran selesai. Pesanan pada akhir jendela konversi masih perlu dipantau selama 30 hari, sehingga pembacaan akhir dapat memerlukan hingga **37 hari setelah penugasan pengguna terakhir**.
+
 ## Jalankan ulang
 
 1. Unduh [CSV sumber](https://raw.githubusercontent.com/udacity/sdand-ab-testing-project/e3aeae691f434eff812bd3c9c4a6f8c7cc2ec5df/ab_data.csv) dan simpan sebagai `ab_data.csv` di folder proyek.
