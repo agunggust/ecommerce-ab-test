@@ -59,6 +59,16 @@ Konversi tetap menjadi metrik utama. CSV Udacity hanya memuat hasil konversi bin
 3. **Ukuran sampel akhir.** Sepakati toleransi penurunan pendapatan dan kenaikan refund dengan tim produk dan keuangan. Gunakan riwayat pesanan dan refund pada tingkat pengguna untuk memperkirakan peluang ketiga syarat rilis terpenuhi bersamaan. Sesuaikan target sampel dan kunci aturan keputusan sebelum tes dimulai.
 4. **Waktu keputusan.** Evaluasi setelah target sampel tercapai dan semua jendela pengukuran selesai. Pesanan pada akhir jendela konversi masih perlu dipantau selama 30 hari, sehingga pembacaan akhir dapat memerlukan hingga **37 hari setelah penugasan pengguna terakhir**.
 
+## Simulasi keputusan rilis
+
+Notebook memakai **data sintetis** untuk mendemonstrasikan keputusan setelah alokasi terverifikasi dan jendela pengukuran lengkap. Toleransi ilustratifnya adalah penurunan pendapatan sebesar **0,50 unit mata uang per pengguna** dan kenaikan refund sebesar **2,00 poin persentase**. Ketiga skenario melampaui ambang konversi **+0,50 poin persentase**.
+
+| Skenario | Bukti dari interval 95% | Keputusan |
+| --- | --- | --- |
+| Semua syarat lolos | Pendapatan naik **1,50 hingga 3,02** per pengguna dan tingkat refund turun **0,64 hingga 2,72 poin**. | Pertimbangkan rilis bertahap |
+| Pendapatan turun | Seluruh interval pendapatan berada di bawah batas penurunan **−0,50** per pengguna, dengan selisih **−2,70 hingga −1,36**. | Tahan rilis |
+| Refund belum meyakinkan | Selisih refund **+0,63 hingga +3,04 poin** mencakup batas toleransi **+2,00 poin**. | Tunda keputusan sampai bukti cukup |
+
 ## Jalankan ulang
 
 1. Unduh [CSV sumber](https://raw.githubusercontent.com/udacity/sdand-ab-testing-project/e3aeae691f434eff812bd3c9c4a6f8c7cc2ec5df/ab_data.csv) dan simpan sebagai `ab_data.csv` di folder proyek.
