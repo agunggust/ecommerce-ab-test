@@ -39,6 +39,19 @@ Bobot tiap negara dihitung dari proporsinya dalam sampel gabungan, lalu dipakai 
 - Untuk estimasi terstandardisasi, gunakan interval dengan pendekatan normal yang mengasumsikan bobot negara tetap dan observasi independen.
 - CSV berisi negara, grup eksperimen, dan status konversi. Pemeriksaan pengguna duplikat, kecocokan paparan halaman, dan pola waktu membutuhkan data tambahan. Rasio alokasi aktual dan dampak pada pendapatan juga belum diketahui.
 
+## Metrik pengaman untuk eksperimen berikutnya
+
+Konversi tetap menjadi metrik utama. CSV Udacity hanya memuat hasil konversi biner, sehingga metrik pengaman di bawah adalah rancangan untuk tes berikutnya.
+
+| Metrik | Cara hitung | Risiko yang dipantau |
+| --- | --- | --- |
+| Pendapatan bersih per pengguna | Total nilai produk setelah diskon dan refund, dibagi semua pengguna yang ditugaskan ke grup, termasuk pengguna yang tidak membeli. Gunakan satu mata uang pelaporan. | Konversi naik, tetapi pendapatan per pengguna turun. |
+| Tingkat refund | Persentase pesanan berbayar yang menerima refund penuh atau sebagian. Hitung setiap pesanan maksimal satu kali. | Proporsi pesanan yang berakhir dengan refund naik. |
+
+**Jendela usulan.** Masukkan pesanan berbayar dalam 7 hari sejak pengguna ditugaskan dan amati refund hingga 30 hari sejak pembayaran masing-masing pesanan. Catat ID pengguna, grup dan waktu penugasan, ID pesanan, waktu pembayaran, nilai produk setelah diskon, mata uang, serta waktu dan nilai refund.
+
+**Aturan rilis.** Sebelum tes dimulai, sepakati penurunan pendapatan per pengguna dan kenaikan tingkat refund maksimum yang bisa diterima. Setelah jendela pengukuran lengkap, hitung interval kepercayaan 95% untuk selisih treatment dikurangi control dengan bootstrap pada tingkat pengguna di masing-masing grup. Bawa semua pesanan pengguna yang sama dalam setiap pengambilan sampel. Pertimbangkan rilis jika alokasi valid, konversi memenuhi kriteria utama, batas bawah interval selisih pendapatan berada di atas batas penurunan, dan batas atas interval selisih tingkat refund berada di bawah batas kenaikan. Jika hasil metrik pengaman belum meyakinkan, tunda rilis penuh.
+
 ## Jalankan ulang
 
 1. Unduh [CSV sumber](https://raw.githubusercontent.com/udacity/sdand-ab-testing-project/e3aeae691f434eff812bd3c9c4a6f8c7cc2ec5df/ab_data.csv) dan simpan sebagai `ab_data.csv` di folder proyek.
